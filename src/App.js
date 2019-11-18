@@ -2,6 +2,8 @@ import React from 'react';
 import GlobalStyle from 'theme/GlobalStyle';
 import styled from 'styled-components';
 import TaskItem from 'components/molecules/TaskItem';
+import store from 'store';
+import { Provider } from 'react-redux';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -21,14 +23,16 @@ const TasksList = styled.ul`
 `;
 
 const App = () => (
-  <StyledWrapper>
-    <GlobalStyle />
-    <TasksList>
-      <TaskItem />
-      <TaskItem />
-      <TaskItem />
-    </TasksList>
-  </StyledWrapper>
+  <Provider store={store}>
+    <StyledWrapper>
+      <GlobalStyle />
+      <TasksList>
+        <TaskItem />
+        <TaskItem />
+        <TaskItem />
+      </TasksList>
+    </StyledWrapper>
+  </Provider>
 );
 
 export default App;
