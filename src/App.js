@@ -1,9 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import GlobalStyle from 'theme/GlobalStyle';
 import styled from 'styled-components';
 import TaskItem from 'components/molecules/TaskItem';
-import store from 'store';
-import { Provider } from 'react-redux';
+import { connect } from 'react-redux';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -22,17 +22,30 @@ const TasksList = styled.ul`
   list-style-type: none;
 `;
 
-const App = () => (
-  <Provider store={store}>
-    <StyledWrapper>
-      <GlobalStyle />
-      <TasksList>
-        <TaskItem />
-        <TaskItem />
-        <TaskItem />
-      </TasksList>
-    </StyledWrapper>
-  </Provider>
+const App = ({ tasks }) => (
+  <StyledWrapper>
+    <GlobalStyle />
+    <TasksList>
+      {tasks.map(({ id, title }) => (
+        <TaskItem key={id} id={id} title={title} />
+      ))}
+    </TasksList>
+  </StyledWrapper>
 );
 
-export default App;
+App.propTypes = {
+  tasks: PropTypes.arrayOf(PropTypes.object),
+};
+
+App.defaultProps = {
+  tasks: [],
+};
+
+const mapStateToProps = state => {
+  const { tasks } = state;
+  return {
+    tasks,
+  };
+};
+
+export default connect(mapStateToProps)(App);
