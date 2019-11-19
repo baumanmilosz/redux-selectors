@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import GlobalStyle from 'theme/GlobalStyle';
 import styled from 'styled-components';
 import TaskItem from 'components/molecules/TaskItem';
 import { connect } from 'react-redux';
+import { selectTasks, selectCompletedTasks } from 'store/reducers/rootReducer';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -22,29 +23,36 @@ const TasksList = styled.ul`
   list-style-type: none;
 `;
 
-const App = ({ tasks }) => (
-  <StyledWrapper>
-    <GlobalStyle />
-    <TasksList>
-      {tasks.map(({ id, title }) => (
-        <TaskItem key={id} id={id} title={title} />
-      ))}
-    </TasksList>
-  </StyledWrapper>
-);
+class App extends Component {
+  state = {};
+
+  render() {
+    const { tasks, completedTasks } = this.props;
+    return (
+      <StyledWrapper>
+        <GlobalStyle />
+        <TasksList>
+          {tasks.map(({ id, title }) => (
+            <TaskItem key={id} id={id} title={title} />
+          ))}
+        </TasksList>
+      </StyledWrapper>
+    );
+  }
+}
 
 App.propTypes = {
-  tasks: PropTypes.arrayOf(PropTypes.object),
+  completedTasks: PropTypes.arrayOf(PropTypes.object),
 };
 
 App.defaultProps = {
-  tasks: [],
+  completedTasks: [],
 };
 
 const mapStateToProps = state => {
-  const { tasks } = state;
   return {
-    tasks,
+    tasks: selectTasks(state),
+    completedTasks: selectCompletedTasks(state),
   };
 };
 
