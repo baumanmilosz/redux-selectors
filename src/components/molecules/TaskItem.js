@@ -7,17 +7,17 @@ import { connect } from 'react-redux';
 import { changeMode } from 'store/actions';
 
 const ListItem = styled.li`
+  width: 100%;
+  padding: 20px;
+  margin: 15px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  height: 70px;
-  border-bottom: 2px solid #e9e9e9;
-  padding: 20px;
-  background-color: #fff;
-  color: #fff;
+  background-color: ${({ theme }) => theme.grey100};
+  color: ${({ theme }) => theme.white};
+  border-radius: 10px;
   &:hover {
-    background-color: #e9e9e9;
+    background-color: ${({ theme }) => theme.grey200};
   }
   ${({ darkMode }) =>
     darkMode &&
@@ -49,14 +49,14 @@ class TaskItem extends Component {
     return (
       <ListItem darkMode={darkMode}>
         {darkMode ? <Paragraph white>{title}</Paragraph> : <Paragraph>{title}</Paragraph>}
-        <Button
+        {/* <Button
           onClick={() => {
             this.handleMode();
             changeMode(id);
           }}
         >
           Click
-        </Button>
+        </Button> */}
       </ListItem>
     );
   }
