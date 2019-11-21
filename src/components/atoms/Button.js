@@ -1,8 +1,10 @@
 import styled, { css } from 'styled-components';
 
 const Button = styled.div`
-  flex-grow: 1;
-  text-align: center;
+  flex-basis: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 10px;
   font-weight: ${({ theme }) => theme.bold};
   color: ${({ theme }) => theme.grey200};

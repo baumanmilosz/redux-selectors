@@ -1,10 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
-import Button from 'components/atoms/Button';
+import styled from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph';
-import { connect } from 'react-redux';
-import { changeMode } from 'store/actions';
 
 const ListItem = styled.li`
   width: 100%;
