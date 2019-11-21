@@ -1,7 +1,10 @@
 import styled, { css } from 'styled-components';
 
 const Button = styled.div`
-  flex-grow: 1;
+  flex-basis: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   padding: 10px;
   font-weight: ${({ theme }) => theme.bold};
