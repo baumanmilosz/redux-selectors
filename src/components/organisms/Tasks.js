@@ -102,11 +102,13 @@ class Tasks extends Component {
 }
 
 Tasks.propTypes = {
+  tasks: PropTypes.arrayOf(PropTypes.object),
   completedTasks: PropTypes.arrayOf(PropTypes.object),
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.node]).isRequired,
 };
 
 Tasks.defaultProps = {
+  tasks: [],
   completedTasks: [],
 };
 
