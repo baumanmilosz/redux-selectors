@@ -16,9 +16,6 @@ const ListItem = styled.li`
   &:hover {
     background-color: ${({ theme }) => theme.grey200};
   }
-  &:empty {
-    background-color: red;
-  }
 `;
 
 const TaskItem = ({ title }) => (

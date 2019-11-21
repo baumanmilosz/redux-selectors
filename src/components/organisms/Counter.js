@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { incrementCounter as incrementCounterAction } from 'store/actions/counterActions';
+import { selectCounter } from 'store/reducers/selectors';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -16,7 +17,6 @@ const StyledSpan = styled.span`
 class Counter extends Component {
   componentDidMount() {
     const { incrementCounter } = this.props;
-
     setInterval(() => {
       incrementCounter();
     }, 1000);
@@ -34,7 +34,7 @@ class Counter extends Component {
 
 const mapStateToProps = state => {
   return {
-    counter: state.counter.counter,
+    counter: selectCounter(state),
   };
 };
 
