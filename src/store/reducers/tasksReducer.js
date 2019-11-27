@@ -3,7 +3,7 @@ const initState = {
     {
       id: 1,
       title: 'Rent a car',
-      darkMode: false,
+      darkMode: true,
       completed: true,
     },
     {
@@ -15,7 +15,7 @@ const initState = {
     {
       id: 3,
       title: 'Buy present',
-      darkMode: false,
+      darkMode: true,
       completed: true,
     },
     {
@@ -35,6 +35,21 @@ const initState = {
 
 const tasksReducer = (state = initState, action) => {
   switch (action.type) {
+    case 'CHANGE_MODE':
+      return {
+        ...state,
+        tasks: [
+          ...state.tasks.map(task => {
+            if (task.id === action.payload) {
+              return {
+                ...task,
+                darkMode: !task.darkMode,
+              };
+            }
+            return task;
+          }),
+        ],
+      };
     default:
       return state;
   }

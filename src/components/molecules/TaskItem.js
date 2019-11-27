@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph';
+import Button from 'components/atoms/Button';
+import { connect } from 'react-redux';
+import { changeMode as changeModeAction } from 'store/actions/tasksActions';
 
 const ListItem = styled.li`
   width: 100%;
-  padding: 20px;
+  height: 70px;
+  padding: 0 20px;
   margin: 15px 0;
   display: flex;
   justify-content: space-between;
@@ -13,18 +17,21 @@ const ListItem = styled.li`
   background-color: ${({ theme }) => theme.grey100};
   color: ${({ theme }) => theme.white};
   border-radius: 10px;
-  &:hover {
-    background-color: ${({ theme }) => theme.grey200};
-  }
+  ${({ darkMode }) =>
+    darkMode &&
+    css`
+      background-color: ${({ theme }) => theme.black};
+    `}
 `;
 
 class TaskItem extends Component {
   state = {
     loading: true,
+    darkMode: false,
   };
 
   componentDidMount() {
-    setTimeout(
+    this.loader = setTimeout(
       () =>
         this.setState({
           loading: false,
@@ -33,19 +40,85 @@ class TaskItem extends Component {
     );
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.loader);
+  }
+
+  handleDarkMode = () => {
+    this.setState(prevState => ({
+      darkMode: !prevState.darkMode,
+      loading: true,
+    }));
+    setTimeout(
+      () =>
+        this.setState({
+          loading: false,
+        }),
+      3000,
+    );
+  };
+
   render() {
     const { loading } = this.state;
-    const { title } = this.props;
+    const { id, title, isDark, changeMode } = this.props;
     return (
-      <ListItem>
-        <Paragraph>{!loading ? title : 'Loading...'}</Paragraph>
-      </ListItem>
+      <>
+        {isDark ? (
+          <ListItem darkMode>
+            {loading ? (
+              <Paragraph darkMode>Loading...</Paragraph>
+            ) : (
+              <>
+                <Paragraph darkMode>{title}</Paragraph>
+                <Button
+                  onClick={() => {
+                    this.handleDarkMode();
+                    changeMode(id);
+                  }}
+                  toggle
+                  darkMode
+                >
+                  Toggle
+                </Button>
+              </>
+            )}
+          </ListItem>
+        ) : (
+          <ListItem>
+            {loading ? (
+              <Paragraph>Loading...</Paragraph>
+            ) : (
+              <>
+                <Paragraph>{title}</Paragraph>
+                <Button
+                  onClick={() => {
+                    this.handleDarkMode();
+                    changeMode(id);
+                  }}
+                  toggle
+                >
+                  Toggle
+                </Button>
+              </>
+            )}
+          </ListItem>
+        )}
+      </>
     );
   }
 }
 
-TaskItem.propTypes = {
-  title: PropTypes.string.isRequired,
+const mapDispatchToProps = dispatch => {
+  return {
+    changeMode: id => dispatch(changeModeAction(id)),
+  };
 };
 
-export default TaskItem;
+TaskItem.propTypes = {
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  isDark: PropTypes.bool.isRequired,
+  changeMode: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(TaskItem);

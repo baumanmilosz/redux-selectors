@@ -33,20 +33,9 @@ let counter = 0;
 
 class Tasks extends Component {
   state = {
-    // loading: true,
     allTasks: true,
     filteredTasks: false,
   };
-
-  // componentDidMount() {
-  //   setTimeout(
-  //     () =>
-  //       this.setState({
-  //         loading: false,
-  //       }),
-  //     2000,
-  //   );
-  // }
 
   handleAllTasks = () => {
     this.setState({
@@ -81,15 +70,15 @@ class Tasks extends Component {
         <TasksList>
           {allTasks ? (
             <>
-              {tasks.map(({ id, title }) => (
-                <TaskItem key={id} id={id} title={title} />
+              {tasks.map(({ id, title, darkMode }) => (
+                <TaskItem key={id} id={id} title={title} isDark={darkMode} />
               ))}
             </>
           ) : null}
           {filteredTasks ? (
             <>
-              {completedTasks.map(({ id, title }) => (
-                <TaskItem key={id} id={id} title={title} />
+              {completedTasks.map(({ id, title, darkMode }) => (
+                <TaskItem key={id} id={id} title={title} isDark={darkMode} />
               ))}
             </>
           ) : null}
