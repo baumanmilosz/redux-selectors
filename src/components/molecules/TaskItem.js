@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph';
@@ -18,11 +18,31 @@ const ListItem = styled.li`
   }
 `;
 
-const TaskItem = ({ title }) => (
-  <ListItem>
-    <Paragraph>{title}</Paragraph>
-  </ListItem>
-);
+class TaskItem extends Component {
+  state = {
+    loading: true,
+  };
+
+  componentDidMount() {
+    setTimeout(
+      () =>
+        this.setState({
+          loading: false,
+        }),
+      3000,
+    );
+  }
+
+  render() {
+    const { loading } = this.state;
+    const { title } = this.props;
+    return (
+      <ListItem>
+        <Paragraph>{!loading ? title : 'Loading...'}</Paragraph>
+      </ListItem>
+    );
+  }
+}
 
 TaskItem.propTypes = {
   title: PropTypes.string.isRequired,

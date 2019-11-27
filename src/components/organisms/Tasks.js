@@ -33,20 +33,20 @@ let counter = 0;
 
 class Tasks extends Component {
   state = {
-    loading: true,
+    // loading: true,
     allTasks: true,
     filteredTasks: false,
   };
 
-  componentDidMount() {
-    setTimeout(
-      () =>
-        this.setState({
-          loading: false,
-        }),
-      2000,
-    );
-  }
+  // componentDidMount() {
+  //   setTimeout(
+  //     () =>
+  //       this.setState({
+  //         loading: false,
+  //       }),
+  //     2000,
+  //   );
+  // }
 
   handleAllTasks = () => {
     this.setState({
@@ -64,7 +64,7 @@ class Tasks extends Component {
 
   render() {
     console.log(`Tasks component render ${++counter} time(s)`);
-    const { loading, allTasks, filteredTasks } = this.state;
+    const { allTasks, filteredTasks } = this.state;
     const { tasks, completedTasks, children } = this.props;
     return (
       <TasksListWrapper>
@@ -78,24 +78,22 @@ class Tasks extends Component {
             Completed tasks
           </Button>
         </InnerWrapper>
-        {!loading ? (
-          <TasksList>
-            {allTasks ? (
-              <>
-                {tasks.map(({ id, title }) => (
-                  <TaskItem key={id} id={id} title={title} />
-                ))}
-              </>
-            ) : null}
-            {filteredTasks ? (
-              <>
-                {completedTasks.map(({ id, title }) => (
-                  <TaskItem key={id} id={id} title={title} />
-                ))}
-              </>
-            ) : null}
-          </TasksList>
-        ) : null}
+        <TasksList>
+          {allTasks ? (
+            <>
+              {tasks.map(({ id, title }) => (
+                <TaskItem key={id} id={id} title={title} />
+              ))}
+            </>
+          ) : null}
+          {filteredTasks ? (
+            <>
+              {completedTasks.map(({ id, title }) => (
+                <TaskItem key={id} id={id} title={title} />
+              ))}
+            </>
+          ) : null}
+        </TasksList>
       </TasksListWrapper>
     );
   }
