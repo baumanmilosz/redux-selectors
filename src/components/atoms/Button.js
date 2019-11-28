@@ -17,6 +17,22 @@ const Button = styled.div`
       color: ${({ theme }) => theme.black};
       border-bottom: 2px solid ${({ theme }) => theme.black};
     `}
+  ${({ toggle }) =>
+    toggle &&
+    css`
+      flex-basis: initial;
+      padding: 5px 10px;
+      font-size: 1.3rem;
+      font-weight: ${({ theme }) => theme.bold};
+      color: ${({ theme }) => theme.white};
+      background-color: ${({ theme }) => theme.black};
+      ${({ darkMode }) =>
+        darkMode &&
+        css`
+          color: ${({ theme }) => theme.black};
+          background-color: ${({ theme }) => theme.white};
+        `}
+    `}
 `;
 
 export default Button;
